@@ -10,9 +10,6 @@
 # of future plagiarism checking).
 
 #The prime functionality of Interact is to Interact with the Surroundings around them
-#The Class is initialized with Data Set and the name of the person
-#hopefully with that information the algorithm can depict a proper greeting to match the needs of the Robot
-
 import pandas as pd
 import numpy as np
 
@@ -23,7 +20,11 @@ class interaction(Exception):
     def __init__(self, people):
         #This function will fail and throw and error if People is not a string
         try:
-            if isinstance(people, str): #single person
+            if isinstance(people, bool): #single person
+                self.type = "single"
+                self.amount_of_people = 1
+                self.people = "USER" #Setting as generic for the lack of a database
+            elif isinstance(people, str): #single person
                 self.type = "single"
                 self.amount_of_people = 1
             elif isinstance(people, list): #More than one person being addressed
@@ -36,10 +37,10 @@ class interaction(Exception):
 
         #Setting other variables
         self.people = people
+        self.phrases = pd.read_csv("Phrases.csv", delimiter=",")
 
 
-
-
+    #Excutes the interaction of the robot
     def interact(self):
         if self.type == "multi":
             self.multi_interaction()
@@ -54,11 +55,16 @@ class interaction(Exception):
 
     def single_interaction(self, person):
         print("single_interaction")
+        print("Hello " + person)
         #Send Code to the Nueral Network to get text
         #Send to the text to speech
 
+    def speak(self, text):
+        pass
+    #Making it translate to text to speech
 
-
+    def conjure_phrase(self):
+        print(self.phrases)
 
 
 #Testing
@@ -70,3 +76,10 @@ if __name__== "__main__":
     test_data2.interact()
 
     test_data3 = interaction(3) #Should throw Error
+
+
+    print("")
+
+    test_data4 = interaction("Tony")
+    test_data4.interact()
+    test_data4.conjure_phrase()
