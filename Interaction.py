@@ -12,6 +12,8 @@
 #The prime functionality of Interact is to Interact with the Surroundings around them
 import pandas as pd
 import numpy as np
+import random
+import csv
 
 class interaction(Exception):
 
@@ -37,7 +39,10 @@ class interaction(Exception):
 
         #Setting other variables
         self.people = people
-        self.phrases = pd.read_csv("Phrases.csv", delimiter=",")
+
+        self.phrases = self.load_phrases()
+
+        #self.phrases = pd.read_csv("Phrases.csv", delimiter=",")
 
 
     #Excutes the interaction of the robot
@@ -55,16 +60,31 @@ class interaction(Exception):
 
     def single_interaction(self, person):
         print("single_interaction")
-        print("Hello " + person)
+        print("Hello " + person + " " + self.conjure_phrase())
+        
         #Send Code to the Nueral Network to get text
         #Send to the text to speech
 
     def speak(self, text):
         pass
+
+
     #Making it translate to text to speech
+    def load_phrases(self):
+        with open('Phrases.csv', 'r') as f:
+            reader = csv.reader(f)
+            your_list = list(reader)
+
+        new_list = []
+        for j in your_list:
+            for i in j:
+                new_list.append(i)
+        del your_list #Memory Control
+        return new_list
+
 
     def conjure_phrase(self):
-        print(self.phrases)
+       return random.choice(self.phrases)
 
 
 #Testing
