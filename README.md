@@ -10,4 +10,4 @@ To ensure code correctness, readability, and proper functionality between branch
 
 ## Issues
 
-For each feature, I will create an [Issue](https://github.com/AdamDeCosta/dat-330-final-project/issues), any discussion about feature implementation, interaction between other features, and general questions related to the feature should take place in the Issue.
+For each feature, I will create an [issue](https://github.com/AdamDeCosta/dat-330-final-project/issues), any discussion about feature implementation, interaction between other features, and general questions related to the feature should take place in the Issue.
