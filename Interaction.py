@@ -39,7 +39,6 @@ class interaction(Exception):
 
         #Setting other variables
         self.people = people
-
         self.phrases = self.load_phrases()
 
         #self.phrases = pd.read_csv("Phrases.csv", delimiter=",")
@@ -65,7 +64,7 @@ class interaction(Exception):
     #Send to the text to speech
     def speak(self, text):
         pass #Will need Paul, Ashley, and Austin to get me the text to speach function
-    
+
     #load all phrases from the file
     def load_phrases(self):
         with open('Phrases.csv', 'r') as f:
