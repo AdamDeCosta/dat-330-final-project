@@ -61,15 +61,12 @@ class interaction(Exception):
     def single_interaction(self, person):
         print("single_interaction")
         print("Hello " + person + " " + self.conjure_phrase())
-        
-        #Send Code to the Nueral Network to get text
-        #Send to the text to speech
 
+    #Send to the text to speech
     def speak(self, text):
-        pass
-
-
-    #Making it translate to text to speech
+        pass #Will need Paul, Ashley, and Austin to get me the text to speach function
+    
+    #load all phrases from the file
     def load_phrases(self):
         with open('Phrases.csv', 'r') as f:
             reader = csv.reader(f)
@@ -82,7 +79,7 @@ class interaction(Exception):
         del your_list #Memory Control
         return new_list
 
-
+    #Gets the random Phrase
     def conjure_phrase(self):
        return random.choice(self.phrases)
 
