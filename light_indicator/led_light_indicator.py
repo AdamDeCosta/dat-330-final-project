@@ -1,10 +1,10 @@
 import time
-import easygopigo3 as easy
+from easygopigo3 import EasyGoPiGo3
 
 
 class LedLightIndicator:
     def __init__(self):
-        gpg = easy.EasyGoPiGo3()
+        gpg = EasyGoPiGo3()
         my_led = gpg.init_led("AD1")
         self.led = my_led
 
