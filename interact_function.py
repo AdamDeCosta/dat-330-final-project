@@ -13,7 +13,8 @@ import random
 import csv
 
 def interact():
-    print("Hello There. " + conjure_phrase())
+    phrase = "Hello There, " + conjure_phrase()
+    print(phrase)
 
 
 
