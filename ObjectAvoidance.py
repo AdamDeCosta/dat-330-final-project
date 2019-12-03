@@ -14,3 +14,8 @@ while True:
         gpg.turn_degrees(TURN_DEGREES)
     time.sleep(.1)
 
+def avoid(gpg, dist_sensor):
+    dist = dist_sensor.read_mm()
+    if dist <= TURN_DISTANCE:
+        gpg.turn_degrees(TURN_DEGREES)
+    time.sleep(.1)
