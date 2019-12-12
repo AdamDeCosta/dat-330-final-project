@@ -2,7 +2,14 @@ import easygopigo3 as easy
 import cv2 as cv
 import numpy as np
 import picamera
+from subprocess import call
+import pandas as pd
+from random import seed
+from random import randint
+import time
 
+TURN_DISTANCE = 20
+TURN_DEGREES = 25
 
 class CompliBot:
     def __init__(self):
@@ -10,6 +17,7 @@ class CompliBot:
         self.dist_sensor = self.bot.init_distance_sensor()
         self.led = self.bot.init_led('AD1')
         self.cam = cv2.videoCapture()
+        self.phrases = pd.read_csv('Phrases.csv')
 
     def run(self):
         while True:
@@ -19,7 +27,7 @@ class CompliBot:
 
     
     def detectFaces(img_array, cascade):
-        gray = cv.cvtColor(img_array, cv.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
         
         if len(faces) != 0:
@@ -28,7 +36,7 @@ class CompliBot:
             return False
             
     def find_faces(self):
-        face_cascade = cv.CascadeClassifier('haarcascade_frontalface_alt.xml')
+        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
         with picamera.PiCamera() as camera:
             camera.resolution = (320, 240)
             camera.framerate = 30
@@ -42,10 +50,25 @@ class CompliBot:
         pass
 
     def avoid_objects(self):
-        pass
+        dist = self.dist_sensor.read_mm()
+        if dist <= TURN_DISTANCE:
+            self.bot.turn_degrees(TURN_DEGREES)
 
     def speak(self):
-        pass
+
+
+        text = self.phrases.sample(1).to_string()
+
+        cmd_beg= 'espeak '
+        cmd_end= ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null' # To play back the stored .wav file and to dump the std errors to /dev/null
+        cmd_out= '--stdout > /home/pi/Desktop/Text.wav ' # To store the voice file
+
+        #Replacing ' ' with '_' to identify words in the text entered
+        text = text.replace(' ', '_')
+
+        #Calls the Espeak TTS Engine to read aloud a Text
+        call([cmd_beg+cmd_out+text+cmd_end], shell=True)
+
 
     def light_on(self):
         self.led.light_max(100)
