@@ -28,7 +28,6 @@ class CompliBot:
         dist = self.dist_sensor.read_mm()
         if dist <= TURN_DISTANCE:
             self.bot.turn_degrees(TURN_DEGREES)
-        time.sleep(.1)
 
     def speak(self):
         pass
