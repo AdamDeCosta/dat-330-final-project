@@ -23,7 +23,7 @@ class CompliBot:
         while True:
             while(not self.find_faces()):
                 self.avoid_objects()
-            self.interaction()
+            self.speak()
 
     
     def detectFaces(img_array, cascade):
@@ -46,8 +46,6 @@ class CompliBot:
 
         
 
-    def interaction(self):
-        pass
 
     def avoid_objects(self):
         dist = self.dist_sensor.read_mm()
