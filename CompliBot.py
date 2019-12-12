@@ -1,5 +1,9 @@
 import easygopigo3 as easy
 import cv2
+from subprocess import call
+import pandas as pd
+from random import seed
+from random import randint
 import time
 
 TURN_DISTANCE = 20
@@ -11,6 +15,7 @@ class CompliBot:
         self.dist_sensor = self.bot.init_distance_sensor()
         self.led = self.bot.init_led('AD1')
         self.cam = cv2.videoCapture()
+        self.phrases = pd.read_csv('Phrases.csv')
 
     def run(self):
         while True:
@@ -30,7 +35,20 @@ class CompliBot:
             self.bot.turn_degrees(TURN_DEGREES)
 
     def speak(self):
-        pass
+
+
+        text = self.phrases.sample(1).to_string()
+
+        cmd_beg= 'espeak '
+        cmd_end= ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null' # To play back the stored .wav file and to dump the std errors to /dev/null
+        cmd_out= '--stdout > /home/pi/Desktop/Text.wav ' # To store the voice file
+
+        #Replacing ' ' with '_' to identify words in the text entered
+        text = text.replace(' ', '_')
+
+        #Calls the Espeak TTS Engine to read aloud a Text
+        call([cmd_beg+cmd_out+text+cmd_end], shell=True)
+
 
     def light_on(self):
         self.led.light_max(100)
