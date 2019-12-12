@@ -11,6 +11,11 @@ import time
 TURN_DISTANCE = 20
 TURN_DEGREES = 25
 
+# Speed Variables for clarity in code
+SLOW = 50
+MED = 200
+FAST = 400
+
 class CompliBot:
     def __init__(self):
         self.bot = easy.EasyGoPiGo3()
@@ -25,7 +30,22 @@ class CompliBot:
                 self.avoid_objects()
             self.speak()
 
-    
+    def default_move(self, distance):
+        self.bot.speed(SLOW)
+        self.bot.drive_inches(distance, True)
+
+    def end_interaction_move(self):
+        self.bot.speed(MED)
+        self.bot.turn_degrees(180)
+        self.bot.forward(10)
+
+    def avoid_objects(self):
+        dist = self.dist_sensor.read_mm()
+        while dist <= TURN_DISTANCE:
+            self.bot.turn_degrees(TURN_DEGREES)
+            dist = self.dist_sensor.read_mm()
+        self.default_move(24)   # Change the distance here as needed
+
     def detectFaces(img_array, cascade):
         gray = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -44,16 +64,12 @@ class CompliBot:
             camera.capture(freshest_frame, use_video_port = True, format = 'rgb')
             return detectFaces(freshest_frame, face_cascade)
 
-        
-
-
     def avoid_objects(self):
         dist = self.dist_sensor.read_mm()
         if dist <= TURN_DISTANCE:
             self.bot.turn_degrees(TURN_DEGREES)
 
     def speak(self):
-
 
         text = self.phrases.sample(1).to_string()
 
