@@ -11,7 +11,7 @@ class CompliBot:
         self.dist_sensor = self.bot.init_distance_sensor()
         self.led = self.bot.init_led('AD1')
         self.cam = cv2.videoCapture()
-        self.data = pd.read_csv('Phrases.csv')
+        self.phrases = pd.read_csv('Phrases.csv')
 
     def run(self):
         while True:
@@ -31,7 +31,7 @@ class CompliBot:
     def speak(self):
 
 
-        text = self.data.sample(1).to_string()
+        text = self.phrases.sample(1).to_string()
 
         cmd_beg= 'espeak '
         cmd_end= ' | aplay /home/pi/Desktop/Text.wav  2>/dev/null' # To play back the stored .wav file and to dump the std errors to /dev/null
