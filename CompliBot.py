@@ -18,7 +18,17 @@ class CompliBot:
         pass
 
     def interaction(self):
-        pass
+         with open('Phrases.csv', 'r') as f: #get the phrase from the file
+            reader = csv.reader(f)
+            phrases = list(reader)
+
+        new_list = []
+        for j in phrases:
+            for i in j:
+                new_list.append(i)
+        del phrases #Memory Control
+        phrase = "Hello There, " + random.choice(new_list) #get a Random Phrase
+        print(phrase)
 
     def avoid_objects(self):
         pass
