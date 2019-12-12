@@ -4,6 +4,10 @@ from subprocess import call
 import pandas as pd
 from random import seed
 from random import randint
+import time
+
+TURN_DISTANCE = 20
+TURN_DEGREES = 25
 
 class CompliBot:
     def __init__(self):
@@ -26,7 +30,9 @@ class CompliBot:
         pass
 
     def avoid_objects(self):
-        pass
+        dist = self.dist_sensor.read_mm()
+        if dist <= TURN_DISTANCE:
+            self.bot.turn_degrees(TURN_DEGREES)
 
     def speak(self):
 
