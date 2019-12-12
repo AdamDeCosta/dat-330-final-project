@@ -43,5 +43,8 @@ class CompliBot:
         call([cmd_beg+cmd_out+text+cmd_end], shell=True)
 
 
+    def light_on(self):
+        self.led.light_max(100)
 
-
+    def light_off(self):
+        self.led.light_max(0)
