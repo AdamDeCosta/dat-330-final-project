@@ -17,13 +17,11 @@ class CompliBot:
         while True:
             while(not self.find_faces()):
                 self.avoid_objects()
-            self.interaction()
+            self.speak()
 
     def find_faces(self):
         pass
 
-    def interaction(self):
-        pass
 
     def avoid_objects(self):
         pass
