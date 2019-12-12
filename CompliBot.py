@@ -1,5 +1,9 @@
 import easygopigo3 as easy
 import cv2
+import time
+
+TURN_DISTANCE = 20
+TURN_DEGREES = 25
 
 class CompliBot:
     def __init__(self):
@@ -21,7 +25,10 @@ class CompliBot:
         pass
 
     def avoid_objects(self):
-        pass
+        dist = self.dist_sensor.read_mm()
+        if dist <= TURN_DISTANCE:
+            self.bot.turn_degrees(TURN_DEGREES)
+        time.sleep(.1)
 
     def speak(self):
         pass
