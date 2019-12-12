@@ -26,5 +26,8 @@ class CompliBot:
     def speak(self):
         pass
 
+    def light_on(self):
+        self.led.light_max(100)
 
-
+    def light_off(self):
+        self.led.light_max(0)
