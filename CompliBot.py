@@ -26,9 +26,12 @@ class CompliBot:
 
     def run(self):
         while True:
+            self.light_off()
             while(not self.find_faces()):
                 self.avoid_objects()
+            self.light_on()
             self.speak()
+            self.end_interaction_move()
 
     def default_move(self, distance):
         self.bot.speed(SLOW)
