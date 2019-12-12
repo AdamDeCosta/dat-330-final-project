@@ -1,5 +1,8 @@
 import easygopigo3 as easy
-import cv2
+import cv2 as cv
+import numpy as np
+import picamera
+
 
 class CompliBot:
     def __init__(self):
@@ -14,8 +17,26 @@ class CompliBot:
                 self.avoid_objects()
             self.interaction()
 
+    
+    def detectFaces(img_array, cascade):
+        gray = cv.cvtColor(img_array, cv.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+        
+        if len(faces) != 0:
+            return True
+        else:
+            return False
+            
     def find_faces(self):
-        pass
+        face_cascade = cv.CascadeClassifier('haarcascade_frontalface_alt.xml')
+        with picamera.PiCamera() as camera:
+            camera.resolution = (320, 240)
+            camera.framerate = 30
+            freshest_frame = np.empty((240, 320, 3), dtype = np.uint8)
+            camera.capture(freshest_frame, use_video_port = True, format = 'rgb')
+            return detectFaces(freshest_frame, face_cascade)
+
+        
 
     def interaction(self):
         pass
