@@ -34,10 +34,9 @@ class CompliBot:
     def interaction(self):
         pass
 
-    def default_move(self):
-        while True:
-            self.bot.speed(SLOW)
-            self.bot.forward(10)
+    def default_move(self, distance):
+        self.bot.speed(SLOW)
+        self.bot.drive_inches(distance, True)
 
     def end_interaction_move(self):
         self.bot.speed(MED)
@@ -46,8 +45,10 @@ class CompliBot:
 
     def avoid_objects(self):
         dist = self.dist_sensor.read_mm()
-        if dist <= TURN_DISTANCE:
+        while dist <= TURN_DISTANCE:
             self.bot.turn_degrees(TURN_DEGREES)
+            dist = self.dist_sensor.read_mm()
+            self.default_move(24)   # Change the distance here as needed
 
     def speak(self):
 
